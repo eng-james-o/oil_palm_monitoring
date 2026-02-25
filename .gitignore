@@ -1,0 +1,15 @@
+# word documents
+*.docx
+
+# Environment and cache files
+__pycache__/
+venv/
+.venv/
+.ipynb_checkpoints/
+
+# Local dev files
+oil_palm.zip
+
+# Training data
+training_data/
+!training_data/data.yaml
