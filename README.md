@@ -80,6 +80,30 @@ The project is in the development phase with a functional prototype implemented 
 
 The current implementation achieves basic functionality but has room for improvement in accuracy, speed, and robustness.
 
+## Results (Notebook Visuals)
+
+Key figures generated during the workflow in `experiments/Oil-palm-CV.ipynb` are saved in `results/` and shown below.
+
+### Full Estate View
+
+![Full Estate View](results/full_estate.png)
+
+### ROI Boundary Overlay
+
+![ROI Boundary Overlay](results/roi_boundary.png)
+
+### ROI Cropped Image
+
+![ROI Cropped Image](results/roi_image.png)
+
+### Positive Training Patches
+
+![Positive Training Patches](results/positive_patches.png)
+
+### Negative Training Patches
+
+![Negative Training Patches](results/negative_patches.png)
+
 ## Next Steps
 
 To advance the project towards production-ready agricultural monitoring and yield estimation:
