@@ -1,2 +1,8 @@
 ultralytics
 rasterio
+tensorflow
+geopandas
+shapely
+matplotlib
+scikit-learn
+opencv-python

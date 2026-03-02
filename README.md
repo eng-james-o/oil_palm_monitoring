@@ -17,7 +17,7 @@ The project utilizes high-resolution TIFF imagery and associated geospatial data
 
 - Geospatial data processing using libraries like Rasterio and GeoPandas.
 - Image patch extraction for positive (tree) and negative (non-tree) samples.
-- CNN-based classification model built with TensorFlow/Keras.
+- CNN-based classification model built with TensorFlow/PyTorch.
 - Visualization of detected trees on maps.
 - Support for ROI (Region of Interest) cropping and boundary clipping.
 
@@ -47,38 +47,19 @@ Data is processed to extract training patches:
 - Positive samples: Patches centered on tree locations.
 - Negative samples: Random patches without trees, ensuring no overlap with positive samples.
 
-## Usage
 
-1. **Data Preparation**:
-   - Load and preprocess geospatial data.
-   - Crop imagery to Region of Interest (ROI).
-   - Extract positive and negative training patches.
-
-2. **Model Training**:
-   - Run the Jupyter notebook `experiments/Oil-palm-CV.ipynb` to train the CNN model.
-   - The notebook includes steps for loading data, splitting into train/test sets, and training the model.
-
-3. **Prediction**:
-   - Use the trained model to predict on new imagery.
-   - Visualize detected trees with bounding boxes.
-
-Example command to run the notebook:
-
-```bash
-jupyter notebook experiments/Oil-palm-CV.ipynb
-```
 
 ## Current State of the Work
 
-The project is in the development phase with a functional prototype implemented in the Jupyter notebook `experiments/Oil-palm-CV.ipynb`. Key accomplishments include:
+The project is in active development, with work centered in `experiments/Oil-palm-CV.ipynb`. The current state includes:
 
-- **Data Loading and Preprocessing**: Successfully loads TIFF imagery, shapefiles, and processes geospatial transformations. Crops data to a defined ROI and clips to boundary polygons.
-- **Patch Extraction**: Generates positive training samples from tree locations and negative samples from random non-overlapping areas. Uses IoU (Intersection over Union) to ensure no overlap between positive and negative patches.
-- **Model Development**: A basic CNN model has been defined and trained for binary classification (tree vs. non-tree). The model uses Conv2D layers, MaxPooling, and Dense layers with dropout for regularization.
-- **Evaluation**: Initial model training and evaluation are implemented, including accuracy metrics and visualization of training history.
-- **Prediction and Visualization**: The model can predict on new image regions and overlay detected bounding boxes on the imagery.
+- **Environment and Dependency Management**: A dedicated virtual environment has been created and dependencies are now tracked in `requirements.txt` (including TensorFlow, Rasterio, GeoPandas, OpenCV, and Ultralytics).
+- **Data Preparation Pipeline**: TIFF imagery, tree points, and boundary shapefiles are loaded and transformed into a consistent geospatial workflow with ROI clipping.
+- **Patch-Based Baseline (CNN)**: Positive and negative patches are generated and used to train a CNN binary classifier (tree patch vs non-tree patch), with baseline evaluation and prediction visualizations in place.
+- **Object Detection Direction (YOLO)**: A new YOLO fine-tuning section has been added to the notebook to move from patch classification toward direct tree localization and counting.
+- **Visualization Artifacts**: Key intermediate outputs are exported to the `results/` folder and documented below.
 
-The current implementation achieves basic functionality but has room for improvement in accuracy, speed, and robustness.
+Overall, the project has a working baseline and a clear transition path to a stronger object-detection-based solution.
 
 ## Results (Notebook Visuals)
 
@@ -106,37 +87,32 @@ Key figures generated during the workflow in `experiments/Oil-palm-CV.ipynb` are
 
 ## Next Steps
 
-To advance the project towards production-ready agricultural monitoring and yield estimation:
+To move this project toward robust tree counting and practical deployment:
 
-1. **Model Improvement**:
-   - Experiment with pre-trained models (e.g., VGG16, ResNet) for better accuracy.
-   - Implement data augmentation to increase training data diversity.
-   - Fine-tune hyperparameters and add regularization techniques.
+1. **Stabilize Reproducible Setup**:
+   - Add explicit virtual environment activation steps to the setup instructions.
+   - Pin dependency versions in `requirements.txt` after confirming a stable run.
+   - Validate notebook execution end-to-end in a clean environment.
 
-2. **Data Expansion**:
-   - Collect more diverse imagery and annotations from different plantations.
-   - Incorporate multi-temporal data for monitoring tree growth over time.
-   - Add ground truth for yield data to correlate tree counts with actual yields.
+2. **Complete YOLO Training Workflow**:
+   - Run the new YOLO fine-tuning cells and persist training artifacts in `results/`.
+   - Tune YOLO hyperparameters (`imgsz`, `epochs`, `batch`, confidence threshold).
+   - Compare YOLO outputs against the CNN baseline using consistent validation data.
 
-3. **Advanced Features**:
-   - Implement object detection (e.g., YOLO, Faster R-CNN) instead of patch-based classification for more precise localization.
-   - Add tree health assessment using spectral indices or additional bands.
-   - Integrate with GIS tools for full plantation management.
+3. **Improve Label Quality and Dataset Coverage**:
+   - Refine bounding box generation around trees for better detection supervision.
+   - Expand training coverage to additional plantation regions and edge cases.
+   - Add an explicit train/validation/test split strategy for geospatial generalization.
 
-4. **Deployment and Integration**:
-   - Develop a web-based interface or API for easy model deployment.
-   - Integrate with cloud platforms (e.g., Google Earth Engine) for large-scale processing.
-   - Automate the pipeline for real-time monitoring using drone or satellite data feeds.
+4. **Evaluation for Counting Accuracy**:
+   - Track precision, recall, and mAP for detection quality.
+   - Add counting-focused metrics (predicted vs actual trees per area/ROI).
+   - Perform error analysis for missed detections and false positives.
 
-5. **Validation and Testing**:
-   - Conduct field validation to compare model predictions with manual counts.
-   - Perform cross-validation and error analysis to identify model weaknesses.
-   - Add unit tests and CI/CD pipelines for code reliability.
-
-6. **Documentation and Collaboration**:
-   - Expand this README with detailed API documentation.
-   - Create tutorials and examples for users.
-   - Open-source the project and encourage community contributions.
+5. **Production Readiness**:
+   - Package inference into a reusable script/module (notebook-independent).
+   - Add basic tests and lightweight CI checks.
+   - Document model versioning and result reproducibility conventions.
 
 ## Contributing
 
@@ -148,4 +124,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Contact
 
-For questions or collaborations, please reach out to [Your Name/Email].
+For questions or collaborations, please reach out to me at <james.o.oluwadare@gmail.com>.
